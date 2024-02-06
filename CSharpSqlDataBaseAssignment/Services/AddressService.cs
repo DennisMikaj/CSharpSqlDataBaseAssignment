@@ -17,40 +17,87 @@ namespace CSharpSqlDataBaseAssignment.Services
             _addressRepository = addressRepository;
         }
 
-        public AddressEntity CreateAddress(string streetName, string postalCode, string city)
+        public AddressEntity? CreateAddress(string streetName, string postalCode, string city)
         {
-            var addressEntity = _addressRepository.Get(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
-            addressEntity ??= _addressRepository.Create(new AddressEntity { StreetName = streetName, PostalCode = postalCode, City = city });
-            return addressEntity;
+            try
+            {
+                var addressEntity = _addressRepository.Get(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
+                addressEntity ??= _addressRepository.Create(new AddressEntity { StreetName = streetName, PostalCode = postalCode, City = city });
+                return addressEntity;
+            }
+            catch ( Exception ex)
+            {
+                Console.WriteLine($"An error occured in CreateAddress: {ex.Message}");
+                return null;
+            }
         }
 
-        public AddressEntity GetAddress(string streetName, string postalCode, string city)
+        public AddressEntity? GetAddress(string streetName, string postalCode, string city)
         {
-            var addressEntity = _addressRepository.Get(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
-            return addressEntity;
+            try
+            {
+                var addressEntity = _addressRepository.Get(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
+                return addressEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetAddress: {ex.Message}");
+                return null;
+            }
         }
 
-        public AddressEntity GetAddressById(int id)
+        public AddressEntity? GetAddressById(int id)
         {
-            var addressEntity = _addressRepository.Get(x => x.Id == id);
-            return addressEntity;
+            try
+            {
+                var addressEntity = _addressRepository.Get(x => x.Id == id);
+                return addressEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetAddressById: {ex.Message}");
+                return null;
+            }
         }
 
-        public IEnumerable<AddressEntity> GetAddresses()
+        public IEnumerable<AddressEntity>? GetAddresses()
         {
-            var addresses = _addressRepository.GetAll();
-            return addresses;
+            try
+            {
+                var addresses = _addressRepository.GetAll();
+                return addresses;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetAddresses: {ex.Message}");
+                return null;
+            }
         }
 
-        public AddressEntity UpdateAddress(AddressEntity addressEntity)
+        public AddressEntity? UpdateAddress(AddressEntity addressEntity)
         {
-            var updatedAddressEntity = _addressRepository.Update(x => x.Id == addressEntity.Id, addressEntity);
-            return updatedAddressEntity;
+            try
+            {
+                var updatedAddressEntity = _addressRepository.Update(x => x.Id == addressEntity.Id, addressEntity);
+                return updatedAddressEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in UpdateAddress: {ex.Message}");
+                return null;
+            }
         }
 
         public void DeleteAddress(int id)
         {
-            _addressRepository.Delete(x => x.Id == id);
+            try
+            {
+                _addressRepository.Delete(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in DeteleAddress: {ex.Message}");
+            }
         }
 
 

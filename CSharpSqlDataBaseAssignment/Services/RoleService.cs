@@ -17,40 +17,87 @@ namespace CSharpSqlDataBaseAssignment.Services
             _roleRepository = roleRepository;
         }
 
-        public RoleEntity CreateRole(string roleName)
+        public RoleEntity? CreateRole(string roleName)
         {
-            var roleEntity = _roleRepository.Get(x => x.RoleName == roleName);
-            roleEntity ??= _roleRepository.Create(new RoleEntity { RoleName = roleName });
-            return roleEntity;
+            try
+            {
+                var roleEntity = _roleRepository.Get(x => x.RoleName == roleName);
+                roleEntity ??= _roleRepository.Create(new RoleEntity { RoleName = roleName });
+                return roleEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in CreateRole: {ex.Message}");
+                return null;
+            }
         }
 
-        public RoleEntity GetRoleByRoleName(string roleName)
+        public RoleEntity? GetRoleByRoleName(string roleName)
         {
-            var roleEntity = _roleRepository.Get(x => x.RoleName == roleName);
-            return roleEntity;
+            try
+            {
+                var roleEntity = _roleRepository.Get(x => x.RoleName == roleName);
+                return roleEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetRoleByRoleName: {ex.Message}");
+                return null;
+            }
         }
 
-        public RoleEntity GetRoleById(int id)
+        public RoleEntity? GetRoleById(int id)
         {
-            var roleEntity = _roleRepository.Get(x => x.Id == id);
-            return roleEntity;
+            try
+            {
+                var roleEntity = _roleRepository.Get(x => x.Id == id);
+                return roleEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetRoleById: {ex.Message}");
+                return null;
+            }
         }
 
-        public IEnumerable<RoleEntity> GetRoles()
+        public IEnumerable<RoleEntity>? GetRoles()
         {
-            var roles = _roleRepository.GetAll();
-            return roles;
+            try
+            {
+                var roles = _roleRepository.GetAll();
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetRoles: {ex.Message}");
+                return null;
+            }
         }
 
-        public RoleEntity UpdateRole(RoleEntity roleEntity)
+        public RoleEntity? UpdateRole(RoleEntity roleEntity)
         {
-            var updatedRoleEntity = _roleRepository.Update(x => x.Id == roleEntity.Id, roleEntity);
-            return updatedRoleEntity;
+            try
+            {
+                var updatedRoleEntity = _roleRepository.Update(x => x.Id == roleEntity.Id, roleEntity);
+                return updatedRoleEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in UpdateRole: {ex.Message}");
+                return null;
+            }
         }
 
         public void DeleteRole(int id)
         {
-            _roleRepository.Delete(x => x.Id == id);
+            try
+            {
+                _roleRepository.Delete(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in DeleteRole: {ex.Message}");
+            }
         }
 
     }

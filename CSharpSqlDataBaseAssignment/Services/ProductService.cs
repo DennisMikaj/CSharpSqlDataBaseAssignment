@@ -20,43 +20,82 @@ namespace CSharpSqlDataBaseAssignment.Services
         }
 
 
-        public ProductEntity CreateProduct(string title, decimal price, string categoryName)
+        public ProductEntity? CreateProduct(string title, decimal price, string categoryName)
         {
 
             var categoryEntity = _categoryService.CreateCategory(categoryName);
 
-            var productEntity = new ProductEntity
+            try
             {
-                Title = title,
-                Price = price,
-                CategoryId = categoryEntity.Id
-            };
+                var productEntity = new ProductEntity
+                {
+                    Title = title,
+                    Price = price,
+                    CategoryId = categoryEntity.Id
+                };
 
-            productEntity = _productRepository.Create(productEntity);
-            return productEntity;
+                productEntity = _productRepository.Create(productEntity);
+                return productEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in CreateProduct: {ex.Message}");
+                return null;
+            }
         }
 
-        public ProductEntity GetProductById(int id)
+        public ProductEntity? GetProductById(int id)
         {
-            var productEntity = _productRepository.Get(x => x.Id == id);
-            return productEntity;
+            try
+            {
+                var productEntity = _productRepository.Get(x => x.Id == id);
+                return productEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetProductById: {ex.Message}");
+                return null;
+            }
         }
 
-        public IEnumerable<ProductEntity> GetProducts()
+        public IEnumerable<ProductEntity>? GetProducts()
         {
-            var products = _productRepository.GetAll();
-            return products;
+            try
+            {
+                var products = _productRepository.GetAll();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetProducts: {ex.Message}");
+                return null;
+            }
         }
 
-        public ProductEntity UpdateProduct(ProductEntity productEntity)
+        public ProductEntity? UpdateProduct(ProductEntity productEntity)
         {
-            var updatedProductEntity = _productRepository.Update(x => x.Id == productEntity.Id, productEntity);
-            return updatedProductEntity;
+            try
+            {
+                var updatedProductEntity = _productRepository.Update(x => x.Id == productEntity.Id, productEntity);
+                return updatedProductEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in UpdateProduct: {ex.Message}");
+                return null;
+            }
         }
 
         public void DeleteProduct(int id)
         {
-            _productRepository.Delete(x => x.Id == id);
+            try
+            {
+                _productRepository.Delete(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in DeleteProduct: {ex.Message}");
+            }
         }
 
 

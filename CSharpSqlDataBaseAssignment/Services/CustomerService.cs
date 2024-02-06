@@ -22,52 +22,97 @@ namespace CSharpSqlDataBaseAssignment.Services
         }
 
 
-        public CustomerEntity CreateCustomer(string firstName, string lastName, string email, string roleName, string streetName, string postalCode, string city)
+        public CustomerEntity? CreateCustomer(string firstName, string lastName, string email, string roleName, string streetName, string postalCode, string city)
         {
+            
             var roleEntity = _roleService.CreateRole(roleName);
             var addressEntity = _addressService.CreateAddress(streetName, postalCode, city);
-
-            var customerEntity = new CustomerEntity
+            try
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                RoleId = roleEntity.Id,
-                AddressId = addressEntity.Id
-            };
-
-            customerEntity = _customerRepository.Create(customerEntity);
-
-            return customerEntity;
+                var customerEntity = new CustomerEntity
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    RoleId = roleEntity.Id,
+                    AddressId = addressEntity.Id
+                };
+                customerEntity = _customerRepository.Create(customerEntity);
+                return customerEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in CreateCustomer: {ex.Message}");
+                return null;
+            }
         }
 
-        public CustomerEntity GetCustomerEmail(string email)
+        public CustomerEntity? GetCustomerEmail(string email)
         {
-            var customerEntity = _customerRepository.Get(x => x.Email == email);
-            return customerEntity;
+            try
+            {
+                var customerEntity = _customerRepository.Get(x => x.Email == email);
+                return customerEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetCustomerEmail: {ex.Message}");
+                return null;
+            }
         }
 
         public CustomerEntity GetCustomerById(int id)
         {
-            var customerEntity = _customerRepository.Get(x => x.Id == id);
-            return customerEntity;
+            try
+            {
+                var customerEntity = _customerRepository.Get(x => x.Id == id);
+                return customerEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetCustomerById: {ex.Message}");
+                return null;
+            }
         }
 
-        public IEnumerable<CustomerEntity> GetCustomers()
+        public IEnumerable<CustomerEntity>? GetCustomers()
         {
-            var customers = _customerRepository.GetAll();
-            return customers;
+            try
+            {
+                var customers = _customerRepository.GetAll();
+                return customers;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetCustomers: {ex.Message}");
+                return null;
+            }
         }
 
-        public CustomerEntity UpdateCustomer(CustomerEntity customerEntity)
+        public CustomerEntity? UpdateCustomer(CustomerEntity customerEntity)
         {
-            var updatedCustomerEntity = _customerRepository.Update(x => x.Id == customerEntity.Id, customerEntity);
-            return updatedCustomerEntity;
+            try
+            {
+                var updatedCustomerEntity = _customerRepository.Update(x => x.Id == customerEntity.Id, customerEntity);
+                return updatedCustomerEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in UpdateCustomer: {ex.Message}");
+                return null;
+            }
         }
 
         public void DeleteCustomer(int id)
         {
-            _customerRepository.Delete(x => x.Id == id);
+            try
+            {
+                _customerRepository.Delete(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in DeleteCustomer: {ex.Message}");
+            }
         }
     }
 }

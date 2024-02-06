@@ -17,40 +17,87 @@ namespace CSharpSqlDataBaseAssignment.Services
             _categoryRepository = categoryRepository;
         }
 
-        public CategoryEntity CreateCategory(string categoryName)
+        public CategoryEntity? CreateCategory(string categoryName)
         {
-            var categoryEntity = _categoryRepository.Get(x => x.CategoryName == categoryName);
-            categoryEntity ??= _categoryRepository.Create(new CategoryEntity { CategoryName = categoryName });
-            return categoryEntity;
+            try
+            {
+                var categoryEntity = _categoryRepository.Get(x => x.CategoryName == categoryName);
+                categoryEntity ??= _categoryRepository.Create(new CategoryEntity { CategoryName = categoryName });
+                return categoryEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in CreateCategory: {ex.Message}");
+                return null;
+            }
         }
 
-        public CategoryEntity GetCategoryByCategoryName(string categoryName)
+        public CategoryEntity? GetCategoryByCategoryName(string categoryName)
         {
-            var categoryEntity = _categoryRepository.Get(x => x.CategoryName == categoryName);
-            return categoryEntity;
+            try
+            {
+                var categoryEntity = _categoryRepository.Get(x => x.CategoryName == categoryName);
+                return categoryEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetCategoryByCategoryName: {ex.Message}");
+                return null;
+            }
         }
 
-        public CategoryEntity GetCategoryById(int id)
+        public CategoryEntity? GetCategoryById(int id)
         {
-            var categoryEntity = _categoryRepository.Get(x => x.Id == id);
-            return categoryEntity;
+            try
+            {
+                var categoryEntity = _categoryRepository.Get(x => x.Id == id);
+                return categoryEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetCategoryById: {ex.Message}");
+                return null;
+            }
         }
 
-        public IEnumerable<CategoryEntity> GetCategories()
+        public IEnumerable<CategoryEntity>? GetCategories()
         {
-            var categories = _categoryRepository.GetAll();
-            return categories;
+            try
+            {
+                var categories = _categoryRepository.GetAll();
+                return categories;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in GetCategories: {ex.Message}");
+                return null;
+            }
         }
 
-        public CategoryEntity UpdateCategory(CategoryEntity categoryEntity)
+        public CategoryEntity? UpdateCategory(CategoryEntity categoryEntity)
         {
-            var updatedCategoryEntity = _categoryRepository.Update(x => x.Id == categoryEntity.Id, categoryEntity);
-            return updatedCategoryEntity;
+            try
+            {
+                var updatedCategoryEntity = _categoryRepository.Update(x => x.Id == categoryEntity.Id, categoryEntity);
+                return updatedCategoryEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in UpdateCategory: {ex.Message}");
+                return null;
+            }
         }
 
         public void DeleteCategory(int id)
         {
-            _categoryRepository.Delete(x => x.Id == id);
+            try
+            {
+                _categoryRepository.Delete(x => x.Id == id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured in DeleteCategory: {ex.Message}");
+            }
         }
     }
 }

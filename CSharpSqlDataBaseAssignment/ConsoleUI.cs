@@ -22,6 +22,13 @@ internal class ConsoleUI
 
         Console.Write("Product Title: ");
         var title = Console.ReadLine()!;
+        if (title == null)
+        {
+         
+                Console.WriteLine("You must enter a title.");
+                CreateProduct_UI();
+            
+        }
 
         Console.Write("Product Price: ");
         decimal price = decimal.Parse(Console.ReadLine()!);
@@ -36,6 +43,8 @@ internal class ConsoleUI
             Console.WriteLine("Product was created.");
             Console.ReadKey();
         }
+        
+        
     }
     public void GetProduct_UI()
     {
@@ -50,6 +59,7 @@ internal class ConsoleUI
     public void UpdateProduct_UI()
     {
         Console.Clear();
+        GetProduct_UI();
         Console.Write("Enter Product Id: ");
         var id = int.Parse(Console.ReadLine()!);
         var product = _productService.GetProductById(id);
@@ -76,6 +86,7 @@ internal class ConsoleUI
     public void DeleteProduct_UI()
     {
         Console.Clear();
+        GetProduct_UI();
         Console.Write("Enter Product Id: ");
         var id = int.Parse(Console.ReadLine()!);
         var product = _productService.GetProductById(id);
