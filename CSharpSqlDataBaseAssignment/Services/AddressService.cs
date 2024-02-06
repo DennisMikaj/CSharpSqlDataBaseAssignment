@@ -17,7 +17,7 @@ namespace CSharpSqlDataBaseAssignment.Services
             _addressRepository = addressRepository;
         }
 
-        public AddressEntity? CreateAddress(string streetName, string postalCode, string city)
+        public  AddressEntity? CreateAddress(string streetName, string postalCode, string city)
         {
             try
             {
